@@ -1,28 +1,17 @@
-version: '3.8'
+networks:
+  rest-service:
+    driver: bridge
 
 services:
-  app:
-    build: .
-    container_name: my-spring-app
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydatabase
-      SPRING_DATASOURCE_USERNAME: myuser
-      SPRING_DATASOURCE_PASSWORD: mypassword
-    depends_on:
-      - db
   db:
     image: postgres:15
-    container_name: my-postgres-db
+    container_name: postgresql
     restart: always
+    networks:
+      - rest-service
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-volumes:
-  postgres_data:
+      - POSTGRES_DB=mydatabase
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
