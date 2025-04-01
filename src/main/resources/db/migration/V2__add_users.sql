@@ -1,1 +1,0 @@
---INSERT INTO users (username, email) VALUES ('testuser', 'testsuser@gmail.com');
